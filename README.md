@@ -1,5 +1,5 @@
 # Secolo-Zip-Automater
-While currently called the Secolo zip automater, it actually is now made to function with any project like it.
+While currently called the Secolo zip automater, it actually is now made to function with any project like it. I just don't have a better name for it yet
 
 Under a given year, the program will perform these actions to prepare each directory for achiving.
 1. Locate the subsequent matching xml file and move it to the newspaper directory.
