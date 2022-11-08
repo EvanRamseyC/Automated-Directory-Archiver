@@ -13,6 +13,9 @@ The script uses '=' as a delimiter in the input file, the user needs to keep it 
 unless the code is changed along with it.
 the 'path' is the string of text at the top of your file explorer. Example: C:\Users\evanr\OneDrive\Documents\FSU\Zip_Project
 
+When the script runs, you must provide the path to reach the file, then the file name and extension itself. I recommend calling it just inputfile.txt, which you 
+can download from here, but you can call it whatever. Since the script uses absolute pathing, you can put it anywhere. 
+
 Values for input file:
 The user will put each value after the '='. You can download the template in github called inputfile.txt
 
@@ -33,9 +36,12 @@ ziproot and zip confirmation is the root for what you want the name of the archi
 the underscore and date. You should receive the name from whoever gives you the project. 
 
 
+Errors that occur will be placed in an Error text file. The Error file will in the same directory that your input file is in, and it will be labeled with the year
+the user is working on.
 Known Issues:
 The script cannot archive folders if the path to reach it includes any spaces. Example: C:\Users\evanr\OneDrive\Documents\FSU\Zip_Project is a valid path.
-C:\Users\evanr\OneDrive\Documents\FSU\Zip Project is not. If a space exists, you must rename the folder with the space first and remove the space.
+C:\Users\evanr\OneDrive\Documents\FSU\Zip Project is not. This means you must make sure that your 1ReadyToProcess directory's path has no spaces at all.
+If a space exists, you must rename the folder with the space first and remove the space.
 
 The script assumes that your 1ReadyToProcess' and 2MODS' subdirectories will first be years, 
 and then inside each year will be the newspaper directories themselves. Example: C:\Users\evanr\OneDrive\Documents\FSU\Zip_Project/1ReadyToProcess/1894.
