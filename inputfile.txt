@@ -1,0 +1,8 @@
+year = 1894
+1ReadyToProcess = 
+2MODS = 
+3Processed = 
+4ReadytoLoad = 
+ziproot = 
+zip confirmation = 
+
