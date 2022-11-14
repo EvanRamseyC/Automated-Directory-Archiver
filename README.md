@@ -7,6 +7,8 @@ Under a given year, the program will perform these actions:
 4. Puts the archive in a directory of choice
 5. Move directories that are already zippped to the folder of the users choice.
 
+You need 7zip to run this script. The script assumes that 7z.exe is in your program files folder (the default one).
+
 Inputting Data:
 The script uses a textfile where you fill in all required information. 
 The script uses '=' as a delimiter in the input file, the user needs to keep it there. The user also shouldn't mess with any of the words that are left of the equal sign
@@ -43,7 +45,10 @@ Example. If the zip is supposed to be FSU_IlSecolo_08121893, your ziproot and zi
 Errors that occur will be placed in an Error text file. The Error file will be in the same directory that your input file is in, and it will be labeled with the year
 the user is working on.
 Known Issues:
-The script cannot archive folders if the path to reach it includes any spaces. Example: C:\Users\evanr\OneDrive\Documents\FSU\Zip_Project is a valid path.
-C:\Users\evanr\OneDrive\Documents\FSU\Zip Project is not. This means you must make sure that your 1ReadyToProcess directory's path has no spaces at all.
-If a space exists, you must rename the folder with the space first and remove the space.
 
+I do not know how the computer handles running a script that effects so many directories since I did not have a large pool to test it on. A workaround for this would be to make a subdirectory in your 1ReadyToProcess directory, put a certain amount of directories inside it, then path the script to that directory specifically. Just make sure the subdirectory you make has no spaces in it. 
+
+The script cannot archive folders if the path to reach it includes any spaces. Example: "C:\Users\evanr\OneDrive\Documents\FSU\Zip_Project" is a valid path.
+"C:\Users\evanr\OneDrive\Documents\FSU\Zip Project" is not. This means you must make sure that your 1ReadyToProcess directory's path has no spaces at all.
+If a space exists, you must rename the folder with the space first and remove the space.
+You cannot use the script if you want to name the archive differently than the xml file should be inside it. The base name of the archive, everything before its specific date at the end of its name, must be the same as the base name of your xml file(everything before its specific date at the end of its name.) Otherwise it will not find any xml files to move, and it will not archive directories that do not have an xml file.
