@@ -57,8 +57,8 @@ the user is working on.
 
 
 Known Issues:
-
-I do not know how the computer handles running a script that effects so many directories since I did not have a large pool to test it on. A workaround for this would be to make a subdirectory in your 1ReadyToProcess directory, put a certain amount of directories inside it, then path the script to that directory specifically. Just make sure the subdirectory you make has no spaces in it. 
+Will the drive have trouble keeping up with the changes?
+Because archiving these files takes time, the drive is typically able to keep up. You may have difficulty navigating that directory as it will be slower, but you can load an entire year without issue.
 
 The script cannot archive folders if the path to reach it includes any spaces. Example: "C:\Users\evanr\OneDrive\Documents\FSU\Zip_Project" is a valid path.
 "C:\Users\evanr\OneDrive\Documents\FSU\Zip Project" is not. This means you must make sure that your 1ReadyToProcess directory's path has no spaces at all.
