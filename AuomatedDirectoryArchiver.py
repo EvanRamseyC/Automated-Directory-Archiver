@@ -235,6 +235,7 @@ def main():
                     f.write(f'{datetime.datetime.now()}:{zipfolder} did not zip correctly '
                             f'because it is already zipped and in 4readytoload. Please check if this is correct.\n')
                     errorcount += 1
+
         if errorcount == 0:
             with open(errorfile, 'a') as f:
                 f.write(f'{datetime.datetime.now()}:All files'
