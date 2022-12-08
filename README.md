@@ -65,3 +65,6 @@ The script cannot archive folders if the path to reach it includes any spaces. E
 If a space exists, you must rename the folder with the space first and remove the space.
 
 You cannot use the script if you want to name the archive differently than the xml file should be inside it. The base name of the archive, everything before its specific date at the end of its name, must be the same as the base name of your xml file(everything before its specific date at the end of its name.) Otherwise it will not find any xml files to move, and it will not archive directories that do not have an xml file.
+
+
+7zip will sometimes crash which causes the script to end. It does not cause any damage however, so you can just rerun the script and it will pick up where it left off.
