@@ -1,6 +1,5 @@
-If you want to run this script without command prompt, you can download the zip file the exe zip file. This will let you run the script off command prompt.
-
-Step 1. Download the Automated-Directory-Archiver-main-exe zip and unzip wherever you want. This will give you a build directory, dist directory, and an inputfile.txt.
+How to run without python.
+Step 1. Download the Automated-Directory-Archiver-main-exe.zip and unzip wherever you want. This will give you a build directory, dist directory, and an inputfile.txt for custom use and multiple preset input files.
 
 Step 2. Go to your inputfile and replace *Insert year here* with the year you are working on. 
 
