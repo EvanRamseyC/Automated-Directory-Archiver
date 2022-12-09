@@ -1,7 +1,7 @@
 How to run without python.
 Step 1. Download the Automated-Directory-Archiver-main-exe.zip and unzip wherever you want. This will give you a build directory, dist directory, and an inputfile.txt for custom use and multiple preset input files.
 
-Step 2. Go to your inputfile and replace *Insert year here* with the year you are working on. 
+Step 2. Go to your inputfile and replace *Insert year here* with the year you are working on.  You can also use the prebuilt inputfiles. When the code asks for your input file, use the name of the one you are using.
 
 Step 3. Save your inputfile.txt
 
@@ -16,3 +16,7 @@ Step 7. Paste the directory path you copied above
 Step 8. insert the name of your inputfile.txt. If you did not change the name, this will be inputfile.txt.
 
 Step 9. Let run
+
+Step 10. This will produce a log of what it is doing. It automatically closes when the script is done or crashes. This crash happens because of 7zip which is unavoidable. If this happens, use the log to find out the last directory it tried to zip. It should still remain in your 1ReadyToProcess fodler. If it isn't. It is in 3Processed and can simply be moved back to 1ReadyToProcess. 
+
+Step 11. Check your 4ReadyToLoad folder and see the most recent zip file made there It will either be a zip of the most recent folder it failed to zip, or the last successful one. Try to open it. if it opens, everything is fine. If it gives back an error, Delete the zip file file. 
