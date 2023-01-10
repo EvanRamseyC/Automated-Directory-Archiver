@@ -174,7 +174,7 @@ def main(inputdir, year, rootdir, modpath, processed, zipdest, manifest, zipname
         """The script assumes that the mod file will be the same name as what you want the zip file to be. So it 
         uses the zip name (something that should be consistent for all files) then adds the underscore and the 
         numbers behind it"""
-        
+
         # Gets the name of the mod file.
         newspaper = '/' + zipname_root + '_' + paperdate + '.xml'
         mod = modpath + newspaper
@@ -221,7 +221,7 @@ def main(inputdir, year, rootdir, modpath, processed, zipdest, manifest, zipname
 
         # Creates zip only if it contains a manifest.ini file and xml file.
         zipcheck = zipdest + "/" + zipname
-        
+
         # Checks if zip file does not exist
         if os.path.exists(zipcheck) is False:
             if os.path.exists(xmlinfolder) is True and os.path.exists(manifestinfolder) is True:
