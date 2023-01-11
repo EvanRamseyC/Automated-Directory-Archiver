@@ -19,5 +19,5 @@ Step 9. Let run
 
 Step 10. This will produce a log of what it is doing. It automatically closes when the script is done or if an unknown crash occurs that stops it. You will find a log file and an error log file in the same place your input file is. Please look at it before running again.
 
-Step 11. Check your 4ReadyToLoad folder and see the most recent zip file made there It will either be a zip of the most recent folder it failed to zip, or the last successful one. Try to open it. if it opens, everything is fine. If it gives back an error, Delete the zip file file. 
+Step 11. Check your 4ReadyToLoad folder and see the most recent zip file made there It will either be a zip of the most recent folder it failed to zip, or the last successful one. Try to open it. if it opens, everything is fine. If it gives back an error, Delete the zip file. If you delete it, make sure that the folder it came from originally is moved back to 1ReadyToProcess if it is already in 3Processed.
 
