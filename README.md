@@ -3,11 +3,11 @@ Automated Directory Archiver
 All projects that follow this structure will work for the script:
        -A year that you are working with
        -One directory that contains all the subdirectories you want to archive for that given year
-       -One directory that contains all the mod (XML) files for a year you want to MOVE to its corresponding subdirectory
+       -One directory that contains all the mod (XML) files for a year you want to move(cut and paste) to its corresponding subdirectory
         you will archive 
        -One directory where you want your readytoprocess directory to go after successfully archived 
        -One directory where you want your compressed archives to go 
-       -one manifest file that you want to be COPIED into each directory
+       -one manifest file that you want to copy and paste into each directory
        -A pattern that you want each archived file to be named by. This script assumes that the archived file will
         be the same name as the mod file inside of it.
 
@@ -52,7 +52,6 @@ Your ziproot is also how the script finds the XML file so the script will not wo
 Example. If the zip is supposed to be FSU_IlSecolo_08121893, your ziproot and zip confirmation will be "FSU_IlSecolo. The base name is FSU_IlSecolo because it is before the underscore and the date after, and it is a consistent pattern.
 
 Upon successfully running the script, it creates a log file and an error file in the same place your input file is. When the code is not running, you can look at the log and error file to see what the script did during its runtime and any errors it ran into across the way.  Please look at the error file at the very least before restarting. 
-
 
 
 Known Issues:
