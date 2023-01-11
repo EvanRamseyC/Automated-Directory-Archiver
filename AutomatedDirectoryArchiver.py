@@ -24,6 +24,7 @@ def end(enderror):
     else:
         return
 
+
 # Function finds all directories that the user
 def listdirs(rootdir):
     rootdirlist = []
@@ -67,11 +68,13 @@ def check():
        -One directory that contains all the subdirectories you want to archive (rootdir)
        -One directory that contains all the mod (xml) files you want to MOVE to its corresponding subdirectory
         you will archive (modpath)
-       -One directory where you want your rootdir subdirectories to go after successfully archived (processed)
+       -One directory where you want your subdirectories to go after successfully archived (processed)
        -One directory where you want your compressed archives to go (zipdest)
        -one manifest file that you want COPIED into each rootdir subdirectory before archiving (manifest)
        -A pattern that you want each archived file to be named by. This script assumes that the archived file will
-        be the same name as  the mod file inside of it.
+        be the same name as the mod file inside of it. It finds the mod you want to put into each folder by joining
+        together your root of the name you want to archive your directory, then finds the date at the end.
+        The assumed date format is MMDDYYYY
        """
 
     year = dictionary2["year"]
@@ -145,7 +148,7 @@ def check():
         sys.exit(0)
 
 
-def main(inputdir, year, rootdir, modpath, processed, zipdest, manifest, zipname_root, error_folder_list):
+def main(inputdir, year, rootdir, modpath, processed, zipdest, manifest, zipname_root, error_folder_list, errorcount):
     # Zip output directory
     os.chdir(zipdest)
     # Path to run 7zip commands
@@ -154,7 +157,7 @@ def main(inputdir, year, rootdir, modpath, processed, zipdest, manifest, zipname
     # Creates error file and count each time it writes in error file.
     log = inputdir + "/logs" + year + ".txt"
     errorfile = inputdir + "/error_file_" + year + ".txt"
-    errorcount = 0
+
     fileline = "------------------------------------------------------------------------------------------" \
                "----------------------------------------------------------------------------- \n"
 
@@ -206,17 +209,19 @@ def main(inputdir, year, rootdir, modpath, processed, zipdest, manifest, zipname
             if os.path.exists(mod) is True:
                 shutil.move(mod, readytoprocessfolder)
                 with open(log, 'a') as f:
-                    f.write(f"Mod {zipname_root}_{paperdate} has been moved\n")
+                    f.write(f"{datetime.datetime.now()}: Mod {zipname_root}_{paperdate} has been moved\n")
                 print(f"Mod {zipname_root}_{paperdate} has been moved")
             else:
                 with open(log, 'a') as f:
-                    f.write(f"{mod} file for this date is not in the MODS or ready to process folders for this date"
+                    f.write(f"{datetime.datetime.now()}: {mod} file for this date is not in the MODS"
+                            f" or ready to process folders for this date"
                             f". The script will not archive this until necessary files are in either folder.\n")
+
                 print(f"{mod} file for this date is not in the MODS or ready to process folders for this date."
                       f"The script will not archive this until necessary files are in either folder.")
         elif os.path.exists(xmlinfolder) is True:
             with open(log, 'a') as f:
-                f.write("Your XML file is already in the folder. Skipping this step\n")
+                f.write(f"{datetime.datetime.now()}: Your XML file is already in the folder. Skipping this step\n")
             print("Your XML file is already in the folder. Skipping this step")
 
         # Creates zip only if it contains a manifest.ini file and xml file.
@@ -226,83 +231,104 @@ def main(inputdir, year, rootdir, modpath, processed, zipdest, manifest, zipname
         if os.path.exists(zipcheck) is False:
             if os.path.exists(xmlinfolder) is True and os.path.exists(manifestinfolder) is True:
                 with open(log, 'a') as f:
-                    f.write(f"Zipping {zipfolder}\n")
+                    f.write(f"{datetime.datetime.now()}: Zipping {zipfolder}\n")
+
+                # Zips the folder and adds to the zip destination folder.
                 print(f"Zipping {zipfolder}")
                 sevenzip_arguments = " a " + zipname + " " + readytoprocessfolder + "\\* -mx5"
                 command = sevenzip_path + sevenzip_arguments
                 subprocess.run(command.replace("/", "\\"))
                 with open(log, 'a') as f:
-                    f.write(f"Zip {zipname} complete\n")
+                    f.write(f"{datetime.datetime.now()}: Zip {zipname} complete\n")
                 print(f"Zip {zipname} complete")
+
+                # When 7zip crashes, paths to folders become false for an unknown reason.
+                # This is why the code tests for it.
                 if os.path.exists(readytoprocessfolder) is False:
                     # 7zip Crashed, restarts script
+                    with open(errorfile, 'a') as f:
+                        f.write(f"{datetime.datetime.now()}: 7zip errors occurred in zip process. "
+                                f"Please check for {dirstring} in 1ReadyToProcess")
                     with open(log, 'a') as f:
-                        f.write(f"7zip errors occured in zip process. Please check for {readytoprocessfolder}.\n"
-                                f"Copy and paste link into file explorer. This folder should not have been zipped.\n")
-                    print("Sevenzip error occured")
+                        f.write(f"{datetime.datetime.now()}: 7zip error occurred for {dirstring}. "
+                                f"Continuing code and ignoring this file.")
+                    print("7zip error occurred")
                     szip_error_file = dirstring
 
-                    return True, szip_error_file
+                    return True, szip_error_file, errorcount
+
                 else:
                     shutil.move(readytoprocessfolder, processed)
-                # File is complete
+
+                # Folder was successfully archived.
                 if directory_amount < len(directorylist) - 1:
                     nextfile = str(directorylist[directory_amount + 1])
                     with open(log, 'a') as f:
-                        f.write(f"File is complete. Moving to next file. Next file is {nextfile}\n")
-                    print(f"File is complete. Moving to next file. Next file is {nextfile}")
+                        f.write(f"{datetime.datetime.now()}: Next file is {nextfile}\n")
+                    print(f"Archive complete. Next file is {nextfile}")
                 else:
                     with open(log, 'a') as f:
-                        f.write("Task complete\n")
+                        f.write(f"{datetime.datetime.now()}: Task complete\n")
                     print("Task complete")
             else:
-                # File did not zip
+                # folder was not successfully archived due to missing files. You can look in the folder to see, but
+                # typically, it is because the XML file is missing since the manifest file is very easy to get.
                 with open(errorfile, 'a') as f:
-                    f.write(f'{datetime.datetime.now()}:{zipfolder} did not zip correctly'
+                    f.write(f'{datetime.datetime.now()}: {zipfolder} did not zip correctly'
                             f' due to either not having a manifest file or xml file.\n')
                     errorcount += 1
         else:
             # File already zipped
             with open(log, 'a') as f:
-                f.write(f"The file you are trying to zip for {zipfolder} has already been zipped. "
+                f.write(f"{datetime.datetime.now()}: The file you are trying to zip for"
+                        f" {zipfolder} has already been zipped. "
                         f"Adding to error log\n")
             print(f"The file you are trying to zip for {zipfolder} "
                   f"has already been zipped. Adding to error log.\n")
             with open(errorfile, 'a') as f:
-                f.write(f'{datetime.datetime.now()}:{zipfolder} did not zip correctly '
+                f.write(f'{datetime.datetime.now()}: {zipfolder} did not zip correctly '
                         f'because it is already zipped and in 4readytoload. Please check if this is correct.\n')
                 errorcount += 1
-
+    # Once the code has attempted to zip each file...
     if errorcount == 0:
         with open(errorfile, 'a') as f:
-            f.write(f'{datetime.datetime.now()}:All files'
+            f.write(f'{datetime.datetime.now()}: All files'
                     f'have been successfully zipped. No issues found\n')
             f.write(fileline)
     elif errorcount > 0:
         with open(log, 'a') as f:
-            f.write("Check logs for errors before restarting\n")
+            f.write(f"{datetime.datetime.now()}: Check logs for errors before restarting.\n"
+                    f" These files were not zipped due to 7zip crashing:\n {error_folder_list}")
             f.write(fileline)
         with open(errorfile, 'a') as f:
             f.write(fileline)
-    return False, None
+
+    return False, None, errorcount
 
 
-# Does validations
-input_directory, processing_year, rootdirectory, mod_file_path, processed_fold,\
-        zipdestination, manifest_file, zip_root_name = check()
-
+# Does validation of inputs
+input_directory, processing_year, rootdirectory, mod_file_path, processed_fold, \
+zipdestination, manifest_file, zip_root_name = check()
 
 work_still_to_do = True
 if __name__ == "__main__":
     Seven_zip_crash_files = []
+    error_number = 0
     while work_still_to_do:
-        Seven_zip_crash, error_file = main(input_directory, processing_year, rootdirectory, mod_file_path,
-                                           processed_fold, zipdestination, manifest_file, zip_root_name,
-                                           Seven_zip_crash_files)
+        Seven_zip_crash, error_file, error_number = main(input_directory, processing_year, rootdirectory, mod_file_path,
+                                                         processed_fold, zipdestination, manifest_file, zip_root_name,
+                                                         Seven_zip_crash_files, error_number)
         if Seven_zip_crash is True:
             Seven_zip_crash_files.append(error_file)
             work_still_to_do = True
             time.sleep(15)
         else:
-            work_still_to_do = False
+            # Untested: This code would go back and zip all the files left that did not zip due to 7zip crashing. Then
+            # it will end the script regardless of what happens.
 
+            """
+            Seven_zip_crash_files = []
+            Seven_zip_crash, error_file = main(input_directory, processing_year, rootdirectory, mod_file_path,
+                                               processed_fold, zipdestination, manifest_file, zip_root_name,
+                                               Seven_zip_crash_files)"""
+            work_still_to_do = False
