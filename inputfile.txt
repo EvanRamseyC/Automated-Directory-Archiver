@@ -1,4 +1,4 @@
-year = 1894
+year =
 1ReadyToProcess = 
 2MODS = 
 3Processed = 
